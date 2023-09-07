@@ -1,0 +1,25 @@
+{"Pid": 28, "Name": "Fortune, Mr. Charles Alexander", "Pclass": 1 , "Survived": 0, "Sex": "male" , "Age": 19, "SibSp": 3 , "Parch": 2, "Embarked": "S"} 
+{"Pid": 29, "Name": "O'Dwyer, Miss. Ellen 'Nellie'", "Pclass": 3 , "Survived": 1, "Sex": "female" , "Age": 33, "SibSp": 0 , "Parch": 0, "Embarked": "Q"} 
+{"Pid": 30, "Name": "Todoroff, Mr. Lalio", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 24, "SibSp": 0 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 31, "Name": "Uruchurtu, Don. Manuel E", "Pclass": 1 , "Survived": 0, "Sex": "male" , "Age": 40, "SibSp": 0 , "Parch": 0, "Embarked": "C"} 
+{"Pid": 32, "Name": "Spencer, Mrs. William Augustus (Marie Eugenie}", "Pclass": 1 , "Survived": 1, "Sex": "female" , "Age": 19, "SibSp": 1 , "Parch": 0, "Embarked": "C"} 
+{"Pid": 33, "Name": "Glynn, Miss. Mary Agatha", "Pclass": 3 , "Survived": 1, "Sex": "female" , "Age": 21, "SibSp": 0 , "Parch": 0, "Embarked": "Q"} 
+{"Pid": 34, "Name": "Wheadon, Mr. Edward H", "Pclass": 2 , "Survived": 0, "Sex": "male" , "Age": 66, "SibSp": 0 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 35, "Name": "Meyer, Mr. Edgar Joseph", "Pclass": 1 , "Survived": 0, "Sex": "male" , "Age": 28, "SibSp": 1 , "Parch": 0, "Embarked": "C"} 
+{"Pid": 36, "Name": "Holverson, Mr. Alexander Oskar", "Pclass": 1 , "Survived": 0, "Sex": "male" , "Age": 42, "SibSp": 1 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 37, "Name": "Mamee, Mr. Hanna", "Pclass": 3 , "Survived": 1, "Sex": "male" , "Age": 55, "SibSp": 0 , "Parch": 0, "Embarked": "C"} 
+{"Pid": 38, "Name": "Cann, Mr. Ernest Charles", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 21, "SibSp": 0 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 39, "Name": "Vander Planke, Miss. Augusta Maria", "Pclass": 3 , "Survived": 0, "Sex": "female" , "Age": 18, "SibSp": 2 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 40, "Name": "Nicola-Yarred, Miss. Jamila", "Pclass": 3 , "Survived": 1, "Sex": "female" , "Age": 14, "SibSp": 1 , "Parch": 0, "Embarked": "C"} 
+{"Pid": 41, "Name": "Ahlin, Mrs. Johan (Johanna Persdotter Larsson}", "Pclass": 3 , "Survived": 0, "Sex": "female" , "Age": 40, "SibSp": 1 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 42, "Name": "Turpin, Mrs. William John Robert (Dorothy Ann Wonnacott}", "Pclass": 2 , "Survived": 0, "Sex": "female" , "Age": 27, "SibSp": 1 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 43, "Name": "Kraeff, Mr. Theodor", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 41, "SibSp": 0 , "Parch": 0, "Embarked": "C"} 
+{"Pid": 44, "Name": "Laroche, Miss. Simonne Marie Anne Andree", "Pclass": 2 , "Survived": 1, "Sex": "female" , "Age": 3, "SibSp": 1 , "Parch": 2, "Embarked": "C"} 
+{"Pid": 45, "Name": "Devaney, Miss. Margaret Delia", "Pclass": 3 , "Survived": 1, "Sex": "female" , "Age": 19, "SibSp": 0 , "Parch": 0, "Embarked": "Q"} 
+{"Pid": 46, "Name": "Rogers, Mr. William John", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 36, "SibSp": 0 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 47, "Name": "Lennon, Mr. Denis", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 40, "SibSp": 1 , "Parch": 0, "Embarked": "Q"} 
+{"Pid": 48, "Name": "O'Driscoll, Miss. Bridget", "Pclass": 3 , "Survived": 1, "Sex": "female" , "Age": 65, "SibSp": 0 , "Parch": 0, "Embarked": "Q"} 
+{"Pid": 49, "Name": "Samaan, Mr. Youssef", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 35, "SibSp": 2 , "Parch": 0, "Embarked": "C"} 
+{"Pid": 50, "Name": "Arnold-Franchi, Mrs. Josef (Josefine Franchi}", "Pclass": 3 , "Survived": 0, "Sex": "female" , "Age": 18, "SibSp": 1 , "Parch": 0, "Embarked": "S"} 
+{"Pid": 51, "Name": "Panula, Master. Juha Niilo", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 7, "SibSp": 4 , "Parch": 1, "Embarked": "S"} 
+{"Pid": 52, "Name": "Nosworthy, Mr. Richard Cater", "Pclass": 3 , "Survived": 0, "Sex": "male" , "Age": 21, "SibSp": 0 , "Parch": 0, "Embarked": "S"} 
