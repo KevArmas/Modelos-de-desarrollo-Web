@@ -4,7 +4,16 @@ app = FastAPI()
 from pydantic import BaseModel
 
 class Passanger(BaseModel):
-    
-passanger_list=[
-        
-]
+    Pid: int
+    Name:str
+    Pclass: int
+    Survived: bool
+    Sex: str
+    Age: int
+    SibSp: bool
+    Parch: int
+    Embarked: str
+
+
+Passanger_list=[0]
+
