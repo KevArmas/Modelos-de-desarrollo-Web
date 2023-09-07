@@ -1,7 +1,7 @@
 #POST
 from fastapi import FastAPI
-app = FastAPI()
 from pydantic import BaseModel
+app = FastAPI()
 
 class Passanger(BaseModel):
     Pid: int
@@ -15,7 +15,7 @@ class Passanger(BaseModel):
     Embarked: str
 
 
-Passanger_list=[
+passanger_list=[
     Passanger(Pid= 1, Name= "Braund, Mr. Owen Harris", Pclass= 3 , Survived= 0, Sex= "male" , Age= 22, SibSp= 1 , Parch= 0, Embarked= "S"), 
     Passanger(Pid= 2, Name= "Cumings, Mrs. John Bradley (Florence Briggs Thayer)", Pclass= 1 , Survived= 1, Sex= "female" , Age= 38, SibSp= 1 , Parch= 0, Embarked= "C"), 
     Passanger(Pid= 3, Name= "Heikkinen, Miss. Laina", Pclass= 3 , Survived= 1, Sex= "female" , Age= 26, SibSp= 0 , Parch= 0, Embarked= "S"), 
@@ -41,25 +41,25 @@ Passanger_list=[
     Passanger(Pid= 23, Name= "McGowan, Miss. Anna 'Annie'", Pclass= 3 , Survived= 1, Sex= "female" , Age= 15, SibSp= 0 , Parch= 0, Embarked= "Q"), 
     Passanger(Pid= 24, Name= "Sloper, Mr. William Thompson", Pclass= 1 , Survived= 1, Sex= "male" , Age= 28, SibSp= 0 , Parch= 0, Embarked= "S"), 
     Passanger(Pid= 25, Name= "Palsson, Miss. Torborg Danira", Pclass= 3 , Survived= 0, Sex= "female" , Age= 8, SibSp= 3 , Parch= 1, Embarked= "S"), 
-    Passanger(Pid= 25, Name= "Asplund, Mrs. Carl Oscar (Selma Augusta Emilia Johansson)", Pclass= 3 , Survived= 1, Sex= "female" , Age= 38, SibSp= 1 , Parch= 5, Embarked= "S"), 
+    Passanger(Pid= 26, Name= "Asplund, Mrs. Carl Oscar (Selma Augusta Emilia Johansson)", Pclass= 3 , Survived= 1, Sex= "female" , Age= 38, SibSp= 1 , Parch= 5, Embarked= "S") 
 ]
 
 #***Get
 @app.get("/passangersclass/")
 async def passangersclass():
-    return (Passanger_list)
+    return (passanger_list)
  # En el explorador colocamos la raiz de la ip: http://127.0.0.1:8000/passangersclass/
 
 
 #***Post
-@app.post("/passangerclass/")
+@app.post("/passangersclass/")
 async def usersclass(passanger:Passanger):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
-    for index, saved_passanger in enumerate(Passanger_list):
-        if saved_passanger.Pid == Passanger.Pid:  #If passanger's Id it's the same as an already registered passanger
+    for index, saved_passanger in enumerate(passanger_list):
+        if saved_passanger.Pid == passanger.Pid:  #If passanger's Id it's the same as an already registered passanger
             return {"error":"The passanger already exists"}
     else:
-        Passanger_list.append(passanger)
+        passanger_list.append(passanger)
         return passanger
