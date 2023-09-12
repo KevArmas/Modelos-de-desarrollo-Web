@@ -63,3 +63,4 @@ async def usersclass(passanger:Passanger):
     else:
         passanger_list.append(passanger)
         return passanger
+    
