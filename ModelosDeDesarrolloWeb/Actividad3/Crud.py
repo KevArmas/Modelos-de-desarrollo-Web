@@ -71,7 +71,7 @@ async def passangersclass(passanger:Passanger):
     
     for index, saved_passanger in enumerate(passanger_list):
         if saved_passanger.Pid == passanger.Pid:  #Checks if the saved Pid is the same as the one requested
-           passanger_list[index] = passanger_list  #If it exists it access to the list's index
+           passanger_list[index] = passanger #If it exists it access to the list's index
            found=True
            
     if not found:
