@@ -45,84 +45,80 @@ passanger_list=[
 ]
 
 #***Get
-@app.get("/usersclass/")
-async def usersclass():
-    return (users_list)
- # En el explorador colocamos la raiz de la ip: http://127.0.0.1:8000/usersclass/
+@app.get("/passangersclass/")
+async def passangersclass():
+    return (passanger_list)
+ # En el explorador colocamos la raiz de la ip: http://127.0.0.1:8000/passangerclass/
 
 
 #***Get con Filtro Path
-@app.get("/usersclass/{id}")
-async def usersclass(id:int):
-    users=filter (lambda user: user.id == id, users_list)  #Función de orden superior
+@app.get("/passangersclass/{Pid}")
+async def passangersclass(Pid:int):
+    passangers=filter (lambda passanger: passanger.Pid == Pid, passanger_list)  #Función de orden superior
     try:
-        return list(users)[0]
+        return list(passangers)[0]
     except:
         return{"error":"No se ha encontrado el usuario"}
     
-     # En el explorador colocamos la raiz de la ip: http://127.0.0.1:8000/usersclass/1
+     # En el explorador colocamos la raiz de la ip: http://127.0.0.1:8000/passangersclass/1
 
 
 #***Get con Filtro Query
-@app.get("/usersclass/")
-async def usersclass(id:int):
-    users=filter (lambda user: user.id == id, users_list)  #Función de orden superior
-    try:
-        return list(users)[0]
-    except:
-        return{"error":"No se ha encontrado el usuario"}
+async def get_passenger(Pid: int):
+    for passenger in passanger_list:
+        if passenger.Pid == Pid:
+            return passenger
+    raise HTTPException(status_code=404, detail="Passenger not found")
 
  # En el explorador colocamos la raiz de la ip: http://127.0.0.1:8000/usersclass/?id=1
  
  
 #***Post
-@app.post("/usersclass/", response_model=User, status_code=status.HTTP_201_CREATED)
-async def usersclass(user:User):
+@app.post("/passangersclass/", response_model=Passanger, status_code=status.HTTP_201_CREATED) #Añadir primer codigo de error correspondiente al metodo usando (Si es POST entonces usar POST)
+async def passangersclass(passanger:Passanger):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
-    for index, saved_user in enumerate(users_list):
-        if saved_user.id == user.id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
-           raise HTTPException(status_code= status.HTTP_401_UNAUTHORIZED,detail="el usuario ya existe")
+    for index, saved_passanger in enumerate(passanger_list):
+        if saved_passanger.Pid == passanger.Pid:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
+           raise HTTPException(status_code= status.HTTP_409_CONFLICT,detail="el usuario ya existe")  #Cambiar info que aparece asi como tambien el status (Revisar que informacion es diferente de arriba y abajo y por que )
     else:
-        users_list.append(user)
-        return user
+        passanger_list.append(passanger)
+        return passanger
     
-    #http://127.0.0.1:8000/usersclass/
+    #http://127.0.0.1:8000/passangerclass/
    
    
     #***Put
-@app.put("/usersclass/")
-async def usersclass(user:User):
+@app.put("/passangersclass/", response_model=Passanger, status_code=status.HTTP_202_ACCEPTED)
+async def passangersclass(passanger:Passanger):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
-    for index, saved_user in enumerate(users_list):
-        if saved_user.id == user.id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
-           users_list[index] = user  #accedemos al indice de la lista que hemos encontrado y actualizamos con el nuevo usuario
-           found=True
-           
-    if not found:
-        return {"error":"No se ha actualizado el usuario"}
+    for index, saved_passanger in enumerate(passanger_list):
+        if saved_passanger.Pid == passanger.Pid:  #Checks if the saved Pid is the same as the one requested
+           raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, detail="The user doesn't exist")
+
     else:
-        return user
+        passanger_list.append(passanger)
+        return passanger
     
-    #http://127.0.0.1:8000/usersclass/
+    #http://127.0.0.1:8000/passangersclass/
     
     
         #***Delete
-@app.delete("/usersclass/{id}")
-async def usersclass(id:int):
+@app.delete("/passangersclass/{Pid}", response_model=Passanger, status_code=status.HTTP_204_NO_CONTENT)
+async def passangersclass(Pid:int):
     
-    found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
+    found=False     #The flag is used to check if we've found the passanger 
     
-    for index, saved_user in enumerate(users_list):
-        if saved_user.id ==id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
-           del users_list[index]  #Eliminamos al indice de la lista que hemos encontrado 
-           found=True
-           return "El registro se ha eliminado"
-       
-    if not found:
-        return {"error":"No se ha eliminado el usuario"}
+    for index, saved_passanger in enumerate(passanger_list):
+        if saved_passanger.Pid == Pid:  #Checks if the saved Pid is the same as the one requested
+           raise HTTPException(status_code= status.HTTP_409_CONFLICT, detail="The passanger you're trying to delete does not exist")
     
-    #http://127.0.0.1:8000/usersclass/1
+    else:
+        passanger_list.append(Pid)
+        return Pid
+    #http://127.0.0.1:8000/passangersclass/1
+
+
