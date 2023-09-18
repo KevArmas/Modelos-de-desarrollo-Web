@@ -115,7 +115,7 @@ async def delete_passanger(Pid: int):
             del passanger_list[index]  # Remove the passanger from the list
             return  # No need to return anything, just use 204 status code
 
-    # If the loop completes without finding the passanger, you can raise a 404 error.
+    # If the loop completes without finding the passanger, can raise a 404 error.
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The passanger you're trying to delete does not exist")
 
     #http://127.0.0.1:8000/passangersclass/1
