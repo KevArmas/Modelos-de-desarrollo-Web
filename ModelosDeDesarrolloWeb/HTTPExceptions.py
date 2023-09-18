@@ -64,6 +64,7 @@ async def passangersclass(Pid:int):
 
 
 #***Get con Filtro Query
+@app.get("/usersclass/")
 async def get_passenger(Pid: int):
     for passenger in passanger_list:
         if passenger.Pid == Pid:
@@ -107,7 +108,7 @@ async def passangersclass(passanger:Passanger):
     
     
         #***Delete
-@app.delete("/passengers/{Pid}", status_code=204)
+@app.delete("/passengers/{Pid}", response_model=Passanger, status_code=status.HTTP_202_ACCEPTED)
 async def delete_passenger(Pid: int):
     for passenger in passanger_list:
         if passenger.Pid == Pid:
