@@ -107,18 +107,13 @@ async def passangersclass(passanger:Passanger):
     
     
         #***Delete
-@app.delete("/passangersclass/{Pid}", response_model=Passanger, status_code=status.HTTP_204_NO_CONTENT)
-async def passangersclass(Pid:int):
-    
-    found=False     #The flag is used to check if we've found the passanger 
-    
-    for index, saved_passanger in enumerate(passanger_list):
-        if saved_passanger.Pid == Pid:  #Checks if the saved Pid is the same as the one requested
-           raise HTTPException(status_code= status.HTTP_409_CONFLICT, detail="The passanger you're trying to delete does not exist")
-    
-    else:
-        passanger_list.append(Pid)
-        return Pid
+@app.delete("/passengers/{Pid}", status_code=204)
+async def delete_passenger(Pid: int):
+    for passenger in passanger_list:
+        if passenger.Pid == Pid:
+            passanger_list.remove(passenger)
+            return
+    raise HTTPException(status_code=404, detail="Passanger not found")
     #http://127.0.0.1:8000/passangersclass/1
 
 
