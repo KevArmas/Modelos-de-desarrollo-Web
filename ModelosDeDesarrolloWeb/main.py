@@ -11,12 +11,11 @@
 #Importamos el framework fastapi a nuestro entorno de trabajo
 from fastapi import FastAPI 
 #Importamos de la carpeta: "routers" el código o las clases: "routers_5" y "routers2_5"
-from routers import CRUD1 , CRUD2, CRUD3, CRUD4, CRUD5, CRUD6, CRUD7, CRUD8, CRUD9, CRUD10 #, router_DB_10
+from routers import CRUD1, CRUD2, CRUD3, CRUD4, CRUD5, CRUD6, CRUD7, CRUD8, CRUD9, CRUD10#, router_DB_10
 
 
 #Creamos un objeto a partir de la clase FastAPI
 app= FastAPI()
-
 
 app.include_router(CRUD1.router)
 app.include_router(CRUD2.router)

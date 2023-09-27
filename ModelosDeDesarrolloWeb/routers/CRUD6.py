@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
-router = FastAPI()
+router = APIRouter()
 
 class Peliculas(BaseModel):
     id: int
@@ -20,14 +20,14 @@ peliculas_list=[
     Peliculas(id=56, Titulo= "Chicago", Genero="Musical" , Año=2002, Director= "Rob Marshall" , Oscares= 6)  ]
 
 #***Get
-@router.get("/peliculasclass/")
+@router.get("/peliculasclass6/")
 async def peliculasclass():
     return (peliculas_list)
  # En el explorador colocamos la raiz de la ip: http://127.0.0.1:8000/peliculasclass/
 
 
 #***Get con Filtro Path
-@router.get("/peliculasclass/{id}")
+@router.get("/peliculasclass6/{id}")
 async def peliculasclass(id:int):
     peliculass=filter (lambda peliculas: peliculas.id == id, peliculas_list)  #Función de orden superior
     try:
@@ -39,7 +39,7 @@ async def peliculasclass(id:int):
 
 
 #***Get con Filtro Query
-@router.get("/peliculasclass/")
+@router.get("/peliculasclass6/")
 async def get_peliculas(id: int):
     for peliculas in peliculas_list:
         if peliculas.id == id:
@@ -50,7 +50,7 @@ async def get_peliculas(id: int):
  
  
 #***Post
-@router.post("/peliculasclass/", response_model=Peliculas, status_code=status.HTTP_201_CREATED) #Añadir primer codigo de error correspondiente al metodo usando (Si es POST entonces usar POST)
+@router.post("/peliculasclass6/", response_model=Peliculas, status_code=status.HTTP_201_CREATED) #Añadir primer codigo de error correspondiente al metodo usando (Si es POST entonces usar POST)
 async def peliculasclass(peliculas:Peliculas):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
@@ -66,7 +66,7 @@ async def peliculasclass(peliculas:Peliculas):
    
    
     #***Put
-@router.put("/peliculasclass/", response_model=Peliculas, status_code=status.HTTP_201_CREATED)
+@router.put("/peliculasclass6/", response_model=Peliculas, status_code=status.HTTP_201_CREATED)
 async def peliculasclass(peliculas:Peliculas):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
@@ -83,7 +83,7 @@ async def peliculasclass(peliculas:Peliculas):
     
     
         #***Delete
-@router.delete("/peliculasclass/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/peliculasclass6/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_peliculas(id: int):
     for index, saved_peliculas in enumerate(peliculas_list):
         if saved_peliculas.id == id:
