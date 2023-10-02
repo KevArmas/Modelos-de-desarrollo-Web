@@ -94,14 +94,16 @@ async def peliculasclass(peliculas:Peliculas):
         #***Delete
 @router.delete("/peliculasclass5/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_peliculas(id: int):
+    found=False
     for index, saved_peliculas in enumerate(peliculas_list):
         if saved_peliculas.id == id:
             del peliculas_list[index]  # Remove the peliculas from the list
+            found=True
             return  # No need to return anything, just use 204 status code
 
-    # If the loop completes without finding the peliculas, can raise a 404 error.
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The peliculas you're trying to delete does not exist")
-
+    if not found: # If the loop completes without finding the peliculas, can raise a 404 error.
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The peliculas you're trying to delete does not exist")
+        return {"error":"Couldn't find the movie"}
     #http://127.0.0.1:8000/peliculasclass/1
 
 
