@@ -1,34 +1,16 @@
-# Instalamos libreria de criptografía para encriptar token
-# pip install "python-jose[cryptography]"
-
-# Instalamos libreria que contiene el algoritmo de encriptación
-# pip install "passlib[bcrypt]"
-
-# Importamos el framework fastapi a nuestro entorno de trabajo
-from fastapi import FastAPI, Depends, HTTPException, status
-# Importamos pydantic para obtener una entidad que pueda definir usuarios
-from pydantic import BaseModel
-
-
-from fastapi.responses import FileResponse
-from fastapi.responses import HTMLResponse
-from fastapi import Depends
-import requests
-
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-# Importamos librería jwt
-from jose import jwt, JWTError
-# Importamos libreria passlib (algoritmo de encriptación)
-from passlib.context import CryptContext
-# Importamos libreria de fechas para la expiración del token
-from datetime import datetime, timedelta
-# Importamos la clase staticfiles para recursos estáticos****
+from fastapi import FastAPI, Depends, HTTPException, status, APIRouter
+from pydantic import BaseModel 
 from fastapi.staticfiles import StaticFiles
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.responses import HTMLResponse
+from jose import jwt, JWTError
+from passlib.context import CryptContext
+from datetime import datetime, timedelta
 
 # Implementamos algoritmo de haseo para encriptar contraseña
 ALGORITHM = "HS256"
 # Duración de autenticación
-ACCESS_TOKEN_DURATION = 1
+ACCESS_TOKEN_DURATION = 2
 # Creamos un secret
 SECRET = "123456789"
 
@@ -202,9 +184,12 @@ async def current_user(user: User = Depends(auth_user)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Usuario inactivo")
     return user
 
+#Aqui vamos a guardar el token una vez que lo generemos en login
+token = None
 
 @app.post("/login/")
 async def login(form: OAuth2PasswordRequestForm = Depends()):
+    global token
     # Busca en la base de datos "users_db" el username que se ingreso en la forma
     user_db = users_db.get(form.username)
     if not user_db:
@@ -217,62 +202,48 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
     # user.password es la contraseña encriptada en la base de datos
     # form.password es la contraseña original que viene en formulario
     if not crypt.verify(form.password, user.password):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="La contraseña no es correcta")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="La contraseña no es correcta")
     # Creamos expiración de 1 min a partir de la hora actual
     access_token_expiration = timedelta(minutes=ACCESS_TOKEN_DURATION)
     # Tiempo de expiración: hora actual mas 1 minuto
     expire = datetime.utcnow()+access_token_expiration
 
     access_token = {"sub": user.username, "exp": expire}
-    return {"access_token": jwt.encode(access_token, SECRET, algorithm=ALGORITHM), "token_type": "bearer"}
+    #return {"access_token": jwt.encode(access_token, SECRET, algorithm=ALGORITHM), "token_type": "bearer"}
+    token = jwt.encode(access_token, SECRET, algorithm=ALGORITHM)
+
+    return {"access_token": token, "token_type": "bearer"}
+
 
 @app.get("/users/me/")
 async def me(user: User = Depends(current_user)):
-    username = user.username
-    if username in users_db:
-        url = "sources/"+username+".JPEG"
-        return FileResponse(url)
-    return user
-
-
-
-# http://127.0.0.1:8000/login/
-
-# username:Freddy
-# password:1234
-
-# http://127.0.0.1:8000/me/
-
-# -uvicorn 7_jwt_auth_users:app --reload
-
-@app.get("/", response_class=HTMLResponse)
-async def get_login_page():
-    return FileResponse("login.html")
-
-@app.get("/styles.css", response_class=HTMLResponse)
-async def get_styles():
-    return FileResponse("styles.css")
-
-@app.get("/user/info", response_model=User)
-async def get_user_info(user: User = Depends(current_user)):
-    return user
-
-
-token = "your_bearer_token_here"
-
-headers = {
-    "Authorization": f"Bearer {token}"
-}
-
-##response = requests.get("http://127.0.0.1:8000/user/info", headers=headers)
-
-##if response.status_code == 200:
-##    user_info = response.json()
-##    print("User Info:")
-##    print(user_info["photo"])
-##    print("Username:", user_info["username"])
-##    print("Phone:", user_info["phone"])
-##    print("Email:", user_info["email"])
-##else:
-##    print("Failed to retrieve user information. Status code:", response.status_code)
+    html_content = """
+    <html>
+        <head>
+            <title>Some HTML in here</title>
+            <link rel="stylesheet" href="../../static/styles.css">
+        </head>
+        <body>
+            <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <h2 class="active"> Hola de nuevo """ + user.username + """<h2>
+                <div class="fadeIn first">
+                    <img src="../../img/""" + user.username + """.jpg" id="icon" alt="Icono de """ + user.username + """" />
+                </div>
+                <div>
+                    <h2>Nombre:</h2>
+                    <p> """ + user.full_name + """</p><br>
+                    <h2>Correo:</h2>
+                    <p> """ + user.email + """</p><br>
+                    <h2>Telefono:</h2>
+                    <p> """ + user.phone + """</p><br>
+                </div>
+                <div id="formFooter">
+                    <a class="underlineHover" href="#"></a>
+                </div>
+            </div>
+            </div>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)

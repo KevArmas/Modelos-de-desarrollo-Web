@@ -245,3 +245,5 @@ async def me(user: User = Depends(current_user)):
 # http://127.0.0.1:8000/me/
 
 # -uvicorn 7_jwt_auth_users:app --reload
+
+
