@@ -44,30 +44,28 @@ async def usersclass(user: User, username:str):
     full_name = user.full_name
     email = user.email
     phone = user.phone
-    disabled = user.disabled
 
     filtro = {"username":username}
     newvalues = {"$set":{"full_name":full_name,
                          "email":email,
                          "phone":phone,
-                         "disabled":disabled,
                          "username":newusername}}
 
     try:
-        connection.Computacion.users.update_one(filtro,newvalues)
-        new_user = user_schema(connection.Computacion.users.find_one({"username":newusername}))
+        db_client.Computacion.users.update_one(filtro,newvalues)
+        new_user = user_schema(db_client.Computacion.users.find_one({"username":newusername}))
         return User(**new_user)
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 # ***Delete
 @router.delete("/userdb/{username}")
-async def usersclass(username:str):
+async def delete_user(username: str):
+    result = db_client.Computacion.users.delete_one({"username": username})
 
-    try:
-        connection.Computacion.users.delete_one({"username":username})
-        return {"Usuario eliminado"}
-    except:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuario no encontrado")
+
+    return {"Usuario eliminado"}
 
 

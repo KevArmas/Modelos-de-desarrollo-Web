@@ -5,4 +5,5 @@ def user_schema(user) -> dict:
             "full_name": user["full_name"], 
             "email": user["email"],
             "phone": user["phone"],
-            "photo": user["photo"]}
+           "photo": user["photo"]}
+
