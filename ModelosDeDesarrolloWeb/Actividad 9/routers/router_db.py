@@ -1,35 +1,29 @@
-# En vez de Importar el framework fastapi, importamos APIRouter a nuestro entorno de trabajo
 from fastapi import APIRouter, HTTPException, status
-# Invocamos la entidad que hemos creado ****new
 from models.User import User
-# Importamos la instancia que devolvera al usuario en formato user ***new
 from schemas.user_schema import user_schema
-# Importamos nuestro cliente para poder agregar usuarios a la db****new
 from db.connection import db_client
 from db import connection
+from bson import ObjectId
 
-# Creamos un objeto a partir de la clase FastAPI
 router = APIRouter()
 
-# Creamos un objeto en forma de lista con diferentes usuarios (Esto sería una base de datos)
 users_list = []
 
 # ***Get
 @router.get("/userdb/")
-async def usersclass():
-    users_list = []
-    try:
-        for userdb in connection.Computacion.users.find():
-            userJSON = user_schema(userdb)
-            users_list.append(User(**userJSON))
-        return users_list
-    except:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+async def get_users():
+    # Fetch all users from the MongoDB collection
+    users = list(db_client.Computacion.users.find())
+
+    # Convert MongoDB documents to User objects using the schema
+    users_with_schema = [user_schema(user) for user in users]
+
+    return users_with_schema
 
 @router.get("/userdb/{username}")
 async def usersclass(username:str):
     try:
-        new_user = user_schema(connection.Computacion.users.find_one({"username":username}))
+        new_user = user_schema(db_client.Computacion.users.find_one({"username":username}))
         return User(**new_user)
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
@@ -39,8 +33,8 @@ async def usersclass(username:str):
 async def usersclass(user: User):
     user_dict = dict (user) #convertir de User a JSON
     del user_dict["id"] #eliminar id
-    id = connection.Computacion.users.insert_one(user_dict).inserted_id
-    new_user = user_schema(connection.Computacion.users.find_one({"_id":id}))
+    id = db_client.Computacion.users.insert_one(user_dict).inserted_id
+    new_user = user_schema(db_client.Computacion.users.find_one({"_id":id}))
     return User(**new_user)
 
 # ***Put
