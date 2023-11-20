@@ -2,12 +2,10 @@ from fastapi import APIRouter, HTTPException, status
 from models.User import User
 from schemas.user_schema import user_schema
 from db.connection import db_client
-from db import connection
 from bson import ObjectId
 
 router = APIRouter()
 
-users_list = []
 
 # ***Get
 @router.get("/userdb/")
@@ -21,7 +19,7 @@ async def get_users():
     return users_with_schema
 
 @router.get("/userdb/{username}")
-async def usersclass(username:str):
+async def get_users(username:str):
     try:
         new_user = user_schema(db_client.Computacion.users.find_one({"username":username}))
         return User(**new_user)
