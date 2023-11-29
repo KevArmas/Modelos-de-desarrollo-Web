@@ -34,10 +34,10 @@ async def show():
     users_list = []
     cursor = collection.find({})  #Cursor helps to move into the DB
 
-    for users_db in cursor:
-        user = UserN(* users_db)
+    for document in cursor:
+        user = UserN(**document)
         users_list.append({
-            "id": str (users_db["_id"]),
+            "id": str (document["_id"]),
             **user.dict()
         })
 
@@ -47,25 +47,26 @@ async def show():
 @router.post("/users/post/", status_code=status.HTTP_201_CREATED, response_description="User succesfully added")
 async def ad(user: UserN1):
 
- users_db = user.dict()
-    if not users_db["id"] == None:
-        if len (users_db["id"]) < 24:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Id must be a 24 lenght hex value")
+    document = user.dict()
+    if not document["id"] == None:
+        if len(document["id"]) < 24:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Id must be a 24 length hex value")
 
     # Check if user already exists 
     if collection.find_one({"_id": ObjectId(user.id)}):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists")
-    
- users_db["_id"]=ObjectId(user.id)
- users_db.pop("id")
- users_db["password"]=crypt.hash(user.password)
 
-    Collection = collection.insert_one(users_db)
- users_db.pop("_id")
- users_db["_id"]=str(Collection.inserted_id)
- users_db = {"_id": users_db.pop("_id"), * users_db}
+    document["_id"] = ObjectId(user.id)
+    document.pop("id")
+    document["password"] = crypt.hash(user.password)
 
-    return {"Message": "User has been added succesfully","User": users_db}
+    result = collection.insert_one(document)
+    document.pop("_id")
+    document["_id"] = str(result.inserted_id)
+    document = {"_id": document.pop("_id"), **document}
+
+    return {"Message": "User has been added succesfully", "User": document}
+
 
 
 #Update Function with put method
@@ -131,3 +132,13 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
 async def me(user_db:UserA= Depends (current_user)):
     imagen = f"static/{user_db.username}.png"
     return FileResponse (imagen)
+
+
+#{
+#        "username":"a",
+#        "full_name":"a",
+#        "email":"a",
+#        "phone":1234,
+#        "password": "123",
+#        "dni":"a"
+#}

@@ -13,7 +13,7 @@ database = cliente["Titanic"]
 collection = database["pasajeros"]
 
 # Mostrar todos los objetos de mi bd
-@router.get("/pasajeros/mostrar/", status_code=status.HTTP_202_ACCEPTED, response_description="Se devolvio la lista correctamente")
+@router.get("/pasajeros/get/", status_code=status.HTTP_202_ACCEPTED, response_description="Se devolvio la lista correctamente")
 async def mostrar():
     resultados = []
     cursor = collection.find({})  # Encuentra todos los documentos en la colección
@@ -28,7 +28,7 @@ async def mostrar():
     return resultados
 
 # Agregar un nuevo pasajero
-@router.post("/pasajeros/agregar/", status_code=status.HTTP_201_CREATED, response_description="Pasajero agregado exitosamente")
+@router.post("/pasajeros/post/", status_code=status.HTTP_201_CREATED, response_description="Pasajero agregado exitosamente")
 async def agregar_pasajero(pasajero: Pasajeros2):
 
     documento = pasajero.dict()
@@ -52,7 +52,7 @@ async def agregar_pasajero(pasajero: Pasajeros2):
     return {"mensaje": "El Pasajero se agrego exitosamente","Pasajero": documento}
 
 # Actualizar un pasajero existente
-@router.put("/pasajeros/actualizar/{pasajero_id}", response_description="Pasajero modificado exitosamente")
+@router.put("/pasajeros/put/{pasajero_id}", response_description="Pasajero modificado exitosamente")
 async def actualizar_pasajero(pasajero_id: str, nuevo_pasajero: Pasajeros):
     result = collection.update_one({"_id": ObjectId(pasajero_id)}, {"$set": nuevo_pasajero.dict()})
     if result.modified_count == 1:
@@ -61,7 +61,7 @@ async def actualizar_pasajero(pasajero_id: str, nuevo_pasajero: Pasajeros):
         raise HTTPException(status_code=404, detail="Pasajero no encontrado o no hay modificaciones que hacer")
 
 # Eliminar un pasajero
-@router.delete("/pasajeros/eliminar/{pasajero_id}", response_description="Pasajero eliminado exitosamente")
+@router.delete("/pasajeros/delete/{pasajero_id}", response_description="Pasajero eliminado exitosamente")
 async def eliminar_pasajero(pasajero_id: str):
     result = collection.delete_one({"_id": ObjectId(pasajero_id)})
     if result.deleted_count == 1:

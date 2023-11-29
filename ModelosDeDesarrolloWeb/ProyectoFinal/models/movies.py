@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from bson import ObjectId
 
 class Peliculas(BaseModel):
-    id: int | None
+    _id: ObjectId | None
     Titulo: str
     Genero: str
     Año: int
@@ -9,7 +10,7 @@ class Peliculas(BaseModel):
     Oscares: int
 
 class Peliculas1(BaseModel):
-    id: int | None
+    id: str | None
     Titulo: str
     Genero: str
     Año: int
